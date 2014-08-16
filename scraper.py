@@ -100,6 +100,7 @@ class AirbnbScraper:
 
                     listings.extend([listing for listing in new_listings if listing['id'] not in crawled_listings])
                     crawled_listings.update(listing['id'] for listing in new_listings)
+                    print new_listings
 
                 offset += 20
                 if self.debug:

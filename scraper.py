@@ -115,8 +115,5 @@ class AirbnbScraper:
             json.dump(listings, f)
 
 if __name__ == "__main__":
-    if len(sys.argv) != 2:
-        print >> sys.stderr, "%s: usage: <zip code>" % sys.argv[0]
-
     ab = AirbnbScraper()
-    ab.crawl(sys.argv[1])
+    ab.crawl()

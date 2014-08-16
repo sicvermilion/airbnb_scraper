@@ -2,7 +2,7 @@ import scraperwiki
 import requests
 import lxml.html
 
-r = requests.get("https://www.airbnb.co.uk/s/Stockholm--Sweden?page=1", verify=False)
+r = requests.get("https://www.airbnb.co.uk/s/Bali--Indonesia?page=1", verify=False)
 dom = lxml.html.fromstring(r.text)
 targetList = dom.cssselect('.search_result a.name')
 ads = []

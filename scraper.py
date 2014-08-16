@@ -109,8 +109,7 @@ class AirbnbScraper:
                 print >> sys.stderr, 'error: could not parse response'
                 sys.exit(1)
 
-        with codecs.open('listings.json', 'w', encoding='utf-8') as f:
-            json.dump(listings, f)
+        scraperwiki.sqlite.save(listings)
 
 if __name__ == "__main__":
     ab = AirbnbScraper()

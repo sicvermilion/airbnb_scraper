@@ -100,7 +100,7 @@ class AirbnbScraper:
 
                     listings.extend([listing for listing in new_listings if listing['id'] not in crawled_listings])
                     crawled_listings.update(listing['id'] for listing in new_listings)
-                    print new_listings
+                    print "new_listings", new_listings
 
                 offset += 20
                 if self.debug:
@@ -110,8 +110,6 @@ class AirbnbScraper:
                 print >> sys.stderr, 'received ValueError:', e
                 print >> sys.stderr, 'error: could not parse response'
                 sys.exit(1)
-
-        scraperwiki.sqlite.save(listings)
 
 if __name__ == "__main__":
     ab = AirbnbScraper()

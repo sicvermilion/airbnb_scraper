@@ -81,7 +81,7 @@ class AirbnbScraper:
         fields = ['id', 'price', 'lat', 'lng', 'instant_bookable', 'has_simplified_booking', 'bedrooms', 'beds',
                   'person_capacity', 'picture_count', 'property_type', 'room_type', 'room_type_category', 'reviews_count']
 
-        count = 999
+        count = 40
         listings = []
         crawled_listings = set()
         while len(listings) < count and offset < count:

@@ -96,8 +96,6 @@ class AirbnbScraper:
                 else:
                     new_listings = [{k: listing['listing'].get(k, None) for k in fields} for listing in js['listings']
                                     if listing['listing']['id'] not in crawled_listings]
-                    for new_listing in new_listings:
-                        new_listing['calendar'] = self.get_listing_calendar(new_listing['id'])
 
                     listings.extend([listing for listing in new_listings if listing['id'] not in crawled_listings])
                     crawled_listings.update(listing['id'] for listing in new_listings)

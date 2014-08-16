@@ -6,6 +6,7 @@ import time
 
 import lxml.html
 import requests
+import scraperwiki
 
 
 class AirbnbScraper:

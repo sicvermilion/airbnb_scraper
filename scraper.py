@@ -14,7 +14,7 @@ class AirbnbScraper:
         self.debug = debug
 
     def listing_url(self, offset):
-        return ('https://m.airbnb.com/api/-/v1/listings/search?location=Bali--Indonesia&number_of_guests=1&offset=%s&guests=1&items_per_page=20'
+        return ('https://m.airbnb.com/api/-/v1/listings/search?location=semarang&number_of_guests=1&offset=%s&guests=1&items_per_page=20'
                 % (offset))
 
     def get(self, url, referer='', min_sleep=30, max_add=120, xhr=False):

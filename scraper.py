@@ -34,58 +34,14 @@ class AirbnbScraper:
 
         return r
 
-    def get_listing_calendar(self, lid):
-        cal = {}
-
-        year = 2014
-        for month in [9, 10]:
-            url = "https://www.airbnb.com/rooms/calendar_tab_inner2/%s?cal_month=%s&cal_year=%s&currency=USD" % (lid, month, year)
-            r = self.get(url, referer='https://www.airbnb.com/listings/%s' % lid, xhr=True, min_sleep=2, max_add=30)
-            dom = lxml.html.fromstring(r.content)
-
-            inMonth = False
-            for td in dom.cssselect("td"):
-                spans = td.cssselect("span")
-                if len(spans) != 1:
-                    print >> sys.stderr, "error: unsure how to deal with HTML (line %s) containing != 1 spans: %s" % (td.sourceline,
-                                                                                                                      r.content)
-                    sys.exit(1)
-
-                day = int(spans[0].text)
-                if day < 1 or day > 31:
-                    print >> sys.stderr, "error: parsed invalid date from HTML (line %s): %s" % (td.sourceline, r.content)
-                    sys.exit(1)
-
-                if day == 1:
-                    if inMonth:
-                        inMonth = False
-                    else:
-                        inMonth = True
-
-                if inMonth:
-                    classes = td.get("class").split(" ")
-                    if "available" in classes:
-                        available = True
-                    elif "unavailable" in classes:
-                        available = False
-                    else:
-                        print >> sys.stderr, "error: listing is neither available or unavailable: %s" % classes
-                        sys.exit(1)
-
-                    k = "%s/%s/%s" % (month, day, year)
-                    cal[k] = available
-
-        return cal
-
     def crawl(self):
         offset = 0
-        fields = ['id', 'price', 'lat', 'lng', 'instant_bookable', 'has_simplified_booking', 'bedrooms', 'beds',
-                  'person_capacity', 'picture_count', 'property_type', 'room_type', 'room_type_category', 'reviews_count']
+        fields = ['id', 'city', 'picture_url','user_id', 'price', 'price_native', 'lat', 'lng',
+        'name', 'smart_location', 'bedrooms', 'state', 'zipcode', 'address', 'property_type',
+        'room_type', 'room_type_category', 'picture_count']
 
-        count = 40
-        listings = []
-        crawled_listings = set()
-        while len(listings) < count and offset < count:
+        count = 999
+        while offset < count:
             r = self.get(self.listing_url(offset), referer='https://m.airbnb.com/s/Bali--Indonesia')
 
             try:
@@ -96,11 +52,8 @@ class AirbnbScraper:
                     break
                 else:
                     new_listings = [{k: listing['listing'].get(k, None) for k in fields} for listing in js['listings']
-                                    if listing['listing']['id'] not in crawled_listings]
 
-                    listings.extend([listing for listing in new_listings if listing['id'] not in crawled_listings])
-                    crawled_listings.update(listing['id'] for listing in new_listings)
-                    print "new_listings", new_listings
+                    print str(new_listings)
 
                 offset += 20
                 if self.debug:

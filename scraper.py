@@ -53,7 +53,7 @@ class AirbnbScraper:
                 else:
                     for listing in js['listings']:
                         new_listings = [{k: listing['listing'].get(k, None) for k in fields}]
-                        print str(new_listings)
+                        scraperwiki.sqlite.save(["id"],new_listings)
 
                 offset += 20
                 if self.debug:

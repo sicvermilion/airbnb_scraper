@@ -51,9 +51,9 @@ class AirbnbScraper:
                 if len(js['listings']) == 0:
                     break
                 else:
-                    new_listings = [{k: listing['listing'].get(k, None) for k in fields} for listing in js['listings']]
-
-                    print str(new_listings)
+                    for listing in js['listings']:
+                        new_listings = [{k: listing['listing'].get(k, None) for k in fields}]
+                        print str(new_listings)
 
                 offset += 20
                 if self.debug:
